@@ -62,27 +62,50 @@ func runBufferedPersonTransport() {
 }
 
 /*
+SELECT, NON-BLOCKING CHANNEL OPS, TIMEOUTS & CLOSING CHANNELS:
+Select:
+makes a goroutine block until one of the case statements can run.
+one case statement is chosen at random if multiples are ready to run
+Non-Blocking/Default case:
+select can be made non-blocking by including a default case.
+if none of the case statements are ready to run, default case is executed
+Timeouts:
+case statement can be made to wait for timeouts using time. 
+this is important to enforce time bounds in case of communication with external
+resources
+Closing a channel:
+Indicates that no more payloads will be sent over the channel.
+Receive can still be done on the channel.
+Once all the payloads are received, indication is given to the receiver about
+the closure via a return value
+*/
+
+/*
 CHANNEL DIRECTION:
 Direction can be specified when channels are used as func params.
 Adds extra type safety to the function and avoids programmer errors
 */
-func newTask(taskNotify chan <- bool) {
+// non blocking send using select with a default case
+func newTask(taskNotify chan <- string, taskNum int) {
 	// send direction specified in the func param
 	// compile time error is generated if a recv is attempted on this param
-	fmt.Println("New task Received.")
-	fmt.Println("Sending new task notification...")
-	taskNotify <- true
+	task := "task" + strconv.Itoa(taskNum)
+	fmt.Println("New task", task)
+	select {
+	case taskNotify <- task:
+		fmt.Println("Sent new task notification")
+	default:
+		fmt.Println("Failed sending new task notification")
+	}
 }
 
-func beginTask(taskNotify <- chan bool) {
+func receiveTask(taskNotify <- chan string) {
 	// recv direction specified in the func param
 	// compile time error is generated if a send is attempted on this param
 	// taskNotify <- false // compile time error
 	fmt.Println("Waiting for new task...")
-	newTask := <- taskNotify
-	if newTask == true {
-		fmt.Println("New task notification recieved.")
-	}
+	task := <- taskNotify
+	fmt.Println("New task recieved", task)
 }
 
 
@@ -95,18 +118,61 @@ Unblock channel by sending signal/task/notification etc
 func taskSyncDemo() {
 	fmt.Println("===Task Synchronisation Demo===")
 	// create a channel for task notification
-	taskNotify := make(chan bool)
+	taskNotify := make(chan string)
 	// block till we have a task to perform
-	go beginTask(taskNotify)
+	go receiveTask(taskNotify)
+	time.Sleep(time.Second * 1)
 	// notify the task channel about a new task in the system
-	go newTask(taskNotify)
+	go newTask(taskNotify, 0)
 	// allow some time for routines to run
 	time.Sleep(time.Second * 1)
 	fmt.Println("===Task Synchronisation Done===")
 }
 
+
+// send new tasks with specified frequency upto maxTasks
+func newTaskSender(taskNotify chan <- string, freqSec int, maxTasks int) {
+	for i := 0; i < maxTasks; i++ {
+		newTask(taskNotify, i)
+		time.Sleep(time.Second * time.Duration(freqSec))
+	}
+	close(taskNotify)
+}
+
+// blocking receive with a specified time out
+func runTaskLoop(taskNotify <- chan string, timeoutSec int) {
+TaskLoop:
+	for {
+		fmt.Println("Run Task Loop")
+		select {
+		case task, open := <- taskNotify:
+			fmt.Println("Received new task", task)
+			if open == false {
+				fmt.Println("Task Notify channel closed")
+				break TaskLoop
+			}
+		case <- time.After(time.Second * time.Duration(timeoutSec)):
+			fmt.Println("Timed out waiting for new tasks")
+			break TaskLoop
+		}
+	}
+	fmt.Println("Breaking out from task loop")
+}
+
+func taskLoopDemo() {
+	fmt.Println("===Task System Start===")
+	taskNotify := make(chan string, 1)
+	go runTaskLoop(taskNotify, 3)
+	go newTaskSender(taskNotify, 2, 1)
+	// let the task system run for 10 seconds
+	time.Sleep(time.Second * 10)
+	fmt.Println("===Task System Stop===")
+}
+
+
 func main() {
 	runUnbufferedPersonTransport()
 	runBufferedPersonTransport()
 	taskSyncDemo()
+	taskLoopDemo()
 }
