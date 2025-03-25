@@ -169,10 +169,30 @@ func taskLoopDemo() {
 	fmt.Println("===Task System Stop===")
 }
 
+/*
+Range over channels:
+range is supported over channels also.
+range iteration terminates when channel is closed
+*/
+func channelRangeDemo() {
+	fmt.Println("===Range over channel===")
+	c := make(chan string, 5)
+	c <- "str1"
+	c <- "str2"
+	c <- "str3"
+	close(c)
+
+	for s := range c {
+		fmt.Println(s)
+	}
+	fmt.Println("===Range over channel done===")
+}
+
 
 func main() {
 	runUnbufferedPersonTransport()
 	runBufferedPersonTransport()
 	taskSyncDemo()
 	taskLoopDemo()
+	channelRangeDemo()
 }
