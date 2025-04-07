@@ -7,10 +7,10 @@
 [https://go.dev/ref/mem]
 
 ## concurrency model
-[https://go.dev/talks/2012/concurrency.slide#1]
-[https://go.dev/doc/codewalk/sharemem/]
-[https://www.youtube.com/watch?v=QDDwwePbDtw]
-[https://medium.com/@mail2rajeevshukla/unlocking-the-power-of-goroutines-understanding-gos-lightweight-concurrency-model-3775f8e696b0]
+[https://go.dev/talks/2012/concurrency.slide#1]  
+[https://go.dev/doc/codewalk/sharemem/]  
+[https://www.youtube.com/watch?v=QDDwwePbDtw]  
+[https://medium.com/@mail2rajeevshukla/unlocking-the-power-of-goroutines-understanding-gos-lightweight-concurrency-model-3775f8e696b0]  
 
 ## garbage collection
 [https://tip.golang.org/doc/gc-guide]
