@@ -1,2 +1,2 @@
 # golang-tpt
-Golang - temporary program for teaching
+golang test programs
