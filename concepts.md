@@ -17,6 +17,13 @@ and
 ## slices - powerful concept
 ---
 
+# idioms
+
+## errors
+go does not have a concept of exceptions
+Use error-indicating return values wherever possible.
+
+---
 # assignments
 
 ## worker pools using goroutines and channels
