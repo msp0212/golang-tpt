@@ -1,8 +1,10 @@
 # concepts
 
 ## spec
+golang spec [https://go.dev/ref/spec]
 
 ## memory model
+[https://go.dev/ref/mem]
 
 ## multi-threading model
 
