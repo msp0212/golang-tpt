@@ -1,14 +1,14 @@
-concepts
-========
-* spec
+# concepts
 
-* memory model
+## spec
 
-* multi-threading model
+## memory model
 
-* garbage collection
+## multi-threading model
 
-* stateful goroutines
+## garbage collection
+
+## stateful goroutines
 
 using `channel` and `select`
 go promotes the idea of sharing memory by communicating over channels
@@ -16,11 +16,11 @@ and
 
 ---
 
-assignments
-===========
-* worker pools using goroutines and channels
+# assignments
 
-* rate limiter
+## worker pools using goroutines and channels
+
+## rate limiter
  using `goroutine`, `channel` and `tickers`
 
 ---
