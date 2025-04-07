@@ -1,14 +1,19 @@
 # concepts
 
 ## spec
-golang spec [https://go.dev/ref/spec]
+[https://go.dev/ref/spec]
 
 ## memory model
 [https://go.dev/ref/mem]
 
-## multi-threading model
+## concurrency model
+[https://go.dev/talks/2012/concurrency.slide#1]
+[https://go.dev/doc/codewalk/sharemem/]
+[https://www.youtube.com/watch?v=QDDwwePbDtw]
+[https://medium.com/@mail2rajeevshukla/unlocking-the-power-of-goroutines-understanding-gos-lightweight-concurrency-model-3775f8e696b0]
 
 ## garbage collection
+[https://tip.golang.org/doc/gc-guide]
 
 ## stateful goroutines
 
@@ -17,6 +22,7 @@ go promotes the idea of sharing memory by communicating over channels
 and 
 
 ## slices - powerful concept
+[https://go.dev/blog/slices-intro]
 ---
 
 # idioms
