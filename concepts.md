@@ -41,5 +41,7 @@ Use error-indicating return values wherever possible.
 ## rate limiter
  using `goroutine`, `channel` and `tickers`
 
+ [https://gobyexample.com/rate-limiting]
+
 ---
 

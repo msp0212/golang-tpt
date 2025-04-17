@@ -5,6 +5,7 @@ import (
 
 	apb "protobufDemo/AppAccessRecordPb"
 
+	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -26,20 +27,27 @@ func genAppAccessRecord() []byte {
 }
 
 func printAppAccessRecord(buf []byte) {
+	fmt.Println("Protobuf record of len", len(buf))
 	p := apb.AppAccessRecord{}
-
 	err := proto.Unmarshal(buf, &p)
 	if err != nil {
 		fmt.Println("Error in  protobuf decoding!")
 		return
 	}
-
 	fmt.Println("App Access Record = ", p)
+
 	fmt.Println("app id= ", p.GetAppId())
 	fmt.Println("app name= ", p.GetAppName())
 	fmt.Println("user name= ", p.GetUserName())
 	fmt.Println("bytes rx= ", p.GetBytesRx())
 	fmt.Println("bytes tx= ", p.GetBytesTx())
+
+	jsonBuf, err := protojson.Marshal(&p)
+	if err != nil {
+		fmt.Println("Error in protojson marshal")
+	}
+	fmt.Println("json buf of len", len(jsonBuf), "=", string(jsonBuf))
+
 }
 
 func main() {
