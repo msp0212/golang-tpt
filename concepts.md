@@ -20,7 +20,7 @@
 using `channel` and `select`
 
 go promotes the idea of sharing memory by communicating over channels
-and 
+
 
 ## slices
 [https://go.dev/blog/slices-intro]
