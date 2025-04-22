@@ -3,7 +3,7 @@ golang test programs
 
 # references
 
-[The Go Memory Model - The Go Programming Language](https://go.dev/ref/mem)
+[The Go Memory Model](https://go.dev/ref/mem)
 
 [Go Concurrency Patterns](https://go.dev/talks/2012/concurrency.slide#1)
 
