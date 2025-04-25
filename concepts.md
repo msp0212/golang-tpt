@@ -25,13 +25,14 @@ go promotes the idea of sharing memory by communicating over channels
 ## slices
 [https://go.dev/blog/slices-intro]
 
+## errors
+go does not have a concept of exceptions
+Use error-indicating return values wherever possible.
+
 ---
 
 # idioms
 
-## errors
-go does not have a concept of exceptions
-Use error-indicating return values wherever possible.
 
 ---
 # assignments
